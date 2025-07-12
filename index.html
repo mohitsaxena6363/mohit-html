@@ -13,7 +13,6 @@
       --text-light: #6b7280;
       --code-bg: #f3f4f6;
     }
-
     body.dark {
       --bg-light: #121212;
       --bg-white: #1e1e1e;
@@ -21,7 +20,6 @@
       --text-light: #9ca3af;
       --code-bg: #2c2c2c;
     }
-
     body {
       font-family: 'Segoe UI', sans-serif;
       background: var(--bg-light);
@@ -31,7 +29,6 @@
       line-height: 1.6;
       transition: background 0.4s, color 0.4s;
     }
-
     header {
       background-color: var(--primary-color);
       color: white;
@@ -39,41 +36,19 @@
       text-align: center;
       position: relative;
     }
-
     .html-logo {
       width: 70px;
       margin-bottom: 10px;
       animation: bounce-in 1.2s ease-out;
     }
-
     @keyframes bounce-in {
-      0% {
-        transform: translateY(-100px);
-        opacity: 0;
-      }
-      60% {
-        transform: translateY(20px);
-        opacity: 1;
-      }
-      80% {
-        transform: translateY(-10px);
-      }
-      100% {
-        transform: translateY(0);
-      }
+      0% { transform: translateY(-100px); opacity: 0; }
+      60% { transform: translateY(20px); opacity: 1; }
+      80% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-    }
-
-    header p {
-      margin: 0;
-      font-size: 1rem;
-      color: #ffd8cb;
-    }
-
+    header h1 { margin: 0; font-size: 2rem; }
+    header p { margin: 0; font-size: 1rem; color: #ffd8cb; }
     .sound-toggle, .theme-toggle {
       position: absolute;
       top: 1.2rem;
@@ -82,49 +57,28 @@
       gap: 10px;
       z-index: 10;
     }
-
-    .sound-toggle {
-      right: 1rem;
-    }
-
-    .theme-toggle {
-      left: 1rem;
-    }
-
-    .sound-toggle span, .theme-toggle span {
-      font-size: 0.9rem;
-      color: white;
-    }
-
+    .sound-toggle { right: 1rem; }
+    .theme-toggle { left: 1rem; }
+    .sound-toggle span, .theme-toggle span { font-size: 0.9rem; color: white; }
     .toggle-switch {
-      width: 40px;
-      height: 22px;
+      width: 40px; height: 22px;
       background-color: #ccc;
       border-radius: 20px;
       position: relative;
       cursor: pointer;
       transition: background 0.3s;
     }
-
     .toggle-switch::before {
       content: "";
       position: absolute;
-      width: 18px;
-      height: 18px;
+      width: 18px; height: 18px;
       background-color: white;
       border-radius: 50%;
-      top: 2px;
-      left: 2px;
+      top: 2px; left: 2px;
       transition: transform 0.3s;
     }
-
-    .toggle-switch.active {
-      background-color: #10b981;
-    }
-
-    .toggle-switch.active::before {
-      transform: translateX(18px);
-    }
+    .toggle-switch.active { background-color: #10b981; }
+    .toggle-switch.active::before { transform: translateX(18px); }
 
     main {
       max-width: 900px;
@@ -161,17 +115,28 @@
       min-height: 1.5em;
     }
 
-    button.speak-btn {
+    button.speak-btn,
+    button.copy-btn {
       position: absolute;
       bottom: 1rem;
-      right: 1rem;
-      background: #e34c26;
+      background: #4b5563;
       color: white;
       border: none;
       padding: 0.4rem 1rem;
       border-radius: 6px;
       font-size: 0.9rem;
       cursor: pointer;
+    }
+
+    button.speak-btn { right: 1rem; background: #e34c26; }
+    button.copy-btn { left: 1rem; }
+
+    .copy-btn.copied::after {
+      content: "✔ Copied!";
+      margin-left: 10px;
+      color: #10b981;
+      font-weight: bold;
+      font-size: 0.8rem;
     }
 
     footer {
@@ -183,41 +148,32 @@
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-
-      .sound-toggle, .theme-toggle {
-        top: 1rem;
-      }
-
-      button.speak-btn {
+      header h1 { font-size: 1.6rem; }
+      .sound-toggle, .theme-toggle { top: 1rem; }
+      button.speak-btn, button.copy-btn {
         font-size: 0.8rem;
         padding: 0.3rem 0.8rem;
       }
     }
 
     @media print {
-      header, footer, button.speak-btn, .sound-toggle, .theme-toggle {
+      header, footer, button.speak-btn, button.copy-btn, .sound-toggle, .theme-toggle {
         display: none;
       }
     }
   </style>
 </head>
 <body>
-
 <header>
   <img class="html-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" />
   <h1>HTML - 1</h1>
   <p>By Mohit Saxena | हिंदी में HTML Tags का परिचय</p>
 
-  <!-- Theme Toggle -->
   <div class="theme-toggle">
     <span>🌙</span>
     <div id="themeSwitch" class="toggle-switch" onclick="toggleTheme()"></div>
   </div>
 
-  <!-- Sound Toggle -->
   <div class="sound-toggle">
     <span>🔊 Sound</span>
     <div id="soundSwitch" class="toggle-switch active" onclick="toggleSound()"></div>
@@ -232,7 +188,7 @@
 
 <script>
   const questions = [
-     { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
+ { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
   { q: "2. बैकग्राउंड कलर लगाने के लिए:", code: '<body bgcolor="Yellow">' },
   { q: "3. बैकग्राउंड इमेज लगाने के लिए:", code: '<body background="photo.jpg">' },
   { q: "4. टेबल का बैकग्राउंड रंग सेट करने के लिए:", code: '<table bgcolor="Yellow"><td>' },
@@ -291,7 +247,7 @@
   { q: "57. File Upload करने के लिए?", code: '<input type="file">' },
   { q: "58. समय चुनने के लिए (Time Picker)?", code: '<input type="time">' },
   { q: "59. Drop-down Select Button के लिए?", code: '<select>\n<option>Mohitsaxena\n</select>' }
-  ];
+ ];
 
   let soundEnabled = true;
 
@@ -311,17 +267,23 @@
     const section = btn.closest("section");
     const title = section.querySelector("h2").innerText;
     const code = section.querySelector("code").dataset.text;
-
     const speakText = `${title}. कोड है: ${code
       .replace(/</g, "लेस देन ")
       .replace(/>/g, "ग्रेटर देन ")
       .replace(/="/g, ' बराबर ')
       .replace(/"/g, ' डबल कोट्स ')}`;
-
     const msg = new SpeechSynthesisUtterance(speakText);
     msg.lang = "hi-IN";
     speechSynthesis.cancel();
     speechSynthesis.speak(msg);
+  }
+
+  function copyCode(btn) {
+    const code = btn.closest("section").querySelector("code").dataset.text;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.classList.add("copied");
+      setTimeout(() => btn.classList.remove("copied"), 1500);
+    });
   }
 
   function loadQuestions() {
@@ -332,10 +294,10 @@
         <h2>${item.q}</h2>
         <code data-text="${item.code.replace(/"/g, '&quot;')}"></code>
         <button class="speak-btn" onclick="speak(this)">🔊 Read</button>
+        <button class="copy-btn" onclick="copyCode(this)">📋 Copy</button>
       `;
       container.appendChild(sec);
     });
-
     animateAll();
   }
 
