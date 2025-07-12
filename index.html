@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title> HTML | By - Mohit </title>
+  <title>HTML | By - Mohit</title>
   <style>
     :root {
       --primary-color: #e34c26;
@@ -20,7 +20,7 @@
       margin: 0;
       padding: 0;
       line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+      transition: background-color 0.5s ease, color 0.5s ease;
     }
 
     body.light {
@@ -33,6 +33,10 @@
       color: var(--text-light);
     }
 
+    body, section, code {
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
     header {
       background-color: var(--primary-color);
       color: white;
@@ -41,9 +45,22 @@
       position: relative;
     }
 
-    header img {
+    @keyframes float-glow {
+      0%   { transform: translateY(0px) scale(1); }
+      50%  { transform: translateY(-8px) scale(1.05); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+
+    header img.html-logo {
       width: 70px;
       margin-bottom: 10px;
+      animation: float-glow 2.5s ease-in-out infinite;
+      transition: transform 0.4s ease, filter 0.3s ease;
+    }
+
+    .html-logo:hover {
+      transform: rotate(3deg) scale(1.08);
+      filter: drop-shadow(0 0 8px white);
     }
 
     header h1 {
@@ -67,13 +84,8 @@
       color: white;
     }
 
-    .sound-toggle {
-      right: 1rem;
-    }
-
-    .mode-toggle {
-      left: 1rem;
-    }
+    .sound-toggle { right: 1rem; }
+    .mode-toggle { left: 1rem; }
 
     .toggle-switch {
       width: 40px;
@@ -188,16 +200,9 @@
     }
 
     @media (max-width: 768px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-
-      .sound-toggle, .mode-toggle {
-        top: 1rem;
-      }
-
-      button.speak-btn,
-      button.copy-btn {
+      header h1 { font-size: 1.6rem; }
+      .sound-toggle, .mode-toggle { top: 1rem; }
+      button.speak-btn, button.copy-btn {
         font-size: 0.8rem;
         padding: 0.3rem 0.8rem;
       }
@@ -212,9 +217,9 @@
 </head>
 <body>
   <header>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" />
+    <img class="html-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" />
     <h1>HTML - 1</h1>
-    <p>By Mohit ❤️ | < HTML > </p>
+    <p>By Mohit ❤️ | &lt; HTML &gt;</p>
     <div class="mode-toggle">
       <span>🌓 Mode</span>
       <div id="modeSwitch" class="toggle-switch" onclick="toggleMode()"></div>
@@ -233,7 +238,7 @@
 
   <script>
     const questions = [
-         { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
+        { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
   { q: "2. बैकग्राउंड कलर लगाने के लिए:", code: '<body bgcolor="Yellow">' },
   { q: "3. बैकग्राउंड इमेज लगाने के लिए:", code: '<body background="photo.jpg">' },
   { q: "4. टेबल का बैकग्राउंड रंग सेट करने के लिए:", code: '<table bgcolor="Yellow"><td>' },
@@ -304,11 +309,15 @@
     }
 
     function toggleMode() {
-      darkMode = !darkMode;
-      document.body.classList.toggle("dark", darkMode);
-      document.body.classList.toggle("light", !darkMode);
-      document.getElementById("modeSwitch").classList.toggle("active", darkMode);
-      localStorage.setItem("darkMode", darkMode ? "on" : "off");
+      document.body.classList.add("fade");
+      setTimeout(() => {
+        darkMode = !darkMode;
+        document.body.classList.toggle("dark", darkMode);
+        document.body.classList.toggle("light", !darkMode);
+        document.getElementById("modeSwitch").classList.toggle("active", darkMode);
+        localStorage.setItem("darkMode", darkMode ? "on" : "off");
+        document.body.classList.remove("fade");
+      }, 200);
     }
 
     function speak(btn) {
@@ -316,7 +325,6 @@
       const section = btn.closest("section");
       const title = section.querySelector("h2").innerText;
       const code = section.querySelector("code").dataset.text;
-
       const speakText = `${title}. कोड है: ${code
         .replace(/</g, "लेस देन ")
         .replace(/>/g, "ग्रेटर देन ")
@@ -339,7 +347,7 @@
 
     function loadQuestions() {
       const container = document.getElementById("questionContainer");
-      questions.forEach((item, index) => {
+      questions.forEach((item) => {
         const sec = document.createElement("section");
         sec.innerHTML = `
           <h2>${item.q}</h2>
@@ -357,12 +365,12 @@
     function animateAll() {
       document.querySelectorAll("code").forEach((el, i) => {
         const text = el.dataset.text;
-        el.innerHTML = "";
+        el.innerText = "";
         let j = 0;
         setTimeout(() => {
           const interval = setInterval(() => {
             if (j < text.length) {
-              el.innerHTML += text[j];
+              el.innerText += text[j];
               j++;
             } else {
               clearInterval(interval);
