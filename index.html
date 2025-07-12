@@ -3,38 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTML | By - Mohit</title>
+  <title>HTML - 1 | Mohit Saxena</title>
   <style>
     :root {
       --primary-color: #e34c26;
       --bg-light: #f9fafb;
-      --bg-dark: #1e1e1e;
+      --bg-white: #ffffff;
       --text-dark: #111827;
-      --text-light: #f3f4f6;
-      --code-bg-light: #f3f4f6;
-      --code-bg-dark: #2e2e2e;
+      --text-light: #6b7280;
+      --code-bg: #f3f4f6;
+    }
+
+    body.dark {
+      --bg-light: #121212;
+      --bg-white: #1e1e1e;
+      --text-dark: #f1f1f1;
+      --text-light: #9ca3af;
+      --code-bg: #2c2c2c;
     }
 
     body {
       font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
       margin: 0;
       padding: 0;
       line-height: 1.6;
-      transition: background-color 0.5s ease, color 0.5s ease;
-    }
-
-    body.light {
-      background-color: var(--bg-light);
-      color: var(--text-dark);
-    }
-
-    body.dark {
-      background-color: var(--bg-dark);
-      color: var(--text-light);
-    }
-
-    body, section, code {
-      transition: background-color 0.5s ease, color 0.5s ease;
+      transition: background 0.4s, color 0.4s;
     }
 
     header {
@@ -45,22 +40,27 @@
       position: relative;
     }
 
-    @keyframes float-glow {
-      0%   { transform: translateY(0px) scale(1); }
-      50%  { transform: translateY(-8px) scale(1.05); }
-      100% { transform: translateY(0px) scale(1); }
-    }
-
-    header img.html-logo {
+    .html-logo {
       width: 70px;
       margin-bottom: 10px;
-      animation: float-glow 2.5s ease-in-out infinite;
-      transition: transform 0.4s ease, filter 0.3s ease;
+      animation: bounce-in 1.2s ease-out;
     }
 
-    .html-logo:hover {
-      transform: rotate(3deg) scale(1.08);
-      filter: drop-shadow(0 0 8px white);
+    @keyframes bounce-in {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+      60% {
+        transform: translateY(20px);
+        opacity: 1;
+      }
+      80% {
+        transform: translateY(-10px);
+      }
+      100% {
+        transform: translateY(0);
+      }
     }
 
     header h1 {
@@ -74,18 +74,27 @@
       color: #ffd8cb;
     }
 
-    .sound-toggle, .mode-toggle {
+    .sound-toggle, .theme-toggle {
       position: absolute;
       top: 1.2rem;
       display: flex;
       align-items: center;
       gap: 10px;
+      z-index: 10;
+    }
+
+    .sound-toggle {
+      right: 1rem;
+    }
+
+    .theme-toggle {
+      left: 1rem;
+    }
+
+    .sound-toggle span, .theme-toggle span {
       font-size: 0.9rem;
       color: white;
     }
-
-    .sound-toggle { right: 1rem; }
-    .mode-toggle { left: 1rem; }
 
     .toggle-switch {
       width: 40px;
@@ -124,16 +133,13 @@
     }
 
     section {
-      background: white;
-      padding: 1.5rem 1.5rem 3.2rem;
+      background: var(--bg-white);
+      padding: 1.5rem 1.5rem 3rem;
       border-radius: 10px;
       margin-bottom: 1.5rem;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
       position: relative;
-    }
-
-    body.dark section {
-      background: #2c2c2c;
+      transition: background 0.4s, color 0.4s;
     }
 
     section h2 {
@@ -142,103 +148,91 @@
       margin-bottom: 0.8rem;
     }
 
-    .code-wrapper {
-      position: relative;
-    }
-
-    .code-wrapper code {
+    code {
+      background: var(--code-bg);
       display: block;
       padding: 0.6rem 1rem;
-      padding-right: 3rem;
       border-radius: 6px;
       font-size: 1rem;
       font-family: 'Courier New', monospace;
       white-space: pre-wrap;
       word-wrap: break-word;
+      color: var(--text-dark);
       min-height: 1.5em;
     }
 
-    body.light code {
-      background: var(--code-bg-light);
-      color: #1f2937;
-    }
-
-    body.dark code {
-      background: var(--code-bg-dark);
-      color: #f1f1f1;
-    }
-
-    button.speak-btn,
-    button.copy-btn {
+    button.speak-btn {
       position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: #e34c26;
+      color: white;
       border: none;
       padding: 0.4rem 1rem;
       border-radius: 6px;
       font-size: 0.9rem;
       cursor: pointer;
-      color: white;
-    }
-
-    button.copy-btn {
-      background: #10b981;
-      top: 6px;
-      right: 8px;
-    }
-
-    button.speak-btn {
-      background: #e34c26;
-      bottom: 1rem;
-      right: 1rem;
     }
 
     footer {
       text-align: center;
       font-size: 0.9rem;
-      color: var(--text-dark);
+      color: var(--text-light);
       padding: 1.5rem;
       margin-top: 2rem;
     }
 
     @media (max-width: 768px) {
-      header h1 { font-size: 1.6rem; }
-      .sound-toggle, .mode-toggle { top: 1rem; }
-      button.speak-btn, button.copy-btn {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      .sound-toggle, .theme-toggle {
+        top: 1rem;
+      }
+
+      button.speak-btn {
         font-size: 0.8rem;
         padding: 0.3rem 0.8rem;
       }
     }
 
     @media print {
-      header, footer, .speak-btn, .copy-btn, .sound-toggle, .mode-toggle {
+      header, footer, button.speak-btn, .sound-toggle, .theme-toggle {
         display: none;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img class="html-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" />
-    <h1>HTML - 1</h1>
-    <p>By Mohit ❤️ | &lt; HTML &gt;</p>
-    <div class="mode-toggle">
-      <span>🌓 Mode</span>
-      <div id="modeSwitch" class="toggle-switch" onclick="toggleMode()"></div>
-    </div>
-    <div class="sound-toggle">
-      <span>🔊 Sound</span>
-      <div id="soundSwitch" class="toggle-switch active" onclick="toggleSound()"></div>
-    </div>
-  </header>
 
-  <main id="questionContainer"></main>
+<header>
+  <img class="html-logo" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" alt="HTML Logo" />
+  <h1>HTML - 1</h1>
+  <p>By Mohit Saxena | हिंदी में HTML Tags का परिचय</p>
 
-  <footer>
-    &copy; 2025 Mohit Saxena | Designed for Hindi HTML Learners
-  </footer>
+  <!-- Theme Toggle -->
+  <div class="theme-toggle">
+    <span>🌙</span>
+    <div id="themeSwitch" class="toggle-switch" onclick="toggleTheme()"></div>
+  </div>
 
-  <script>
-    const questions = [
-        { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
+  <!-- Sound Toggle -->
+  <div class="sound-toggle">
+    <span>🔊 Sound</span>
+    <div id="soundSwitch" class="toggle-switch active" onclick="toggleSound()"></div>
+  </div>
+</header>
+
+<main id="questionContainer"></main>
+
+<footer>
+  &copy; 2025 Mohit Saxena | Designed for Hindi HTML Learners
+</footer>
+
+<script>
+  const questions = [
+     { q: "1. वेबसाइट के नाम को दिखाने के लिए:", code: "<title>" },
   { q: "2. बैकग्राउंड कलर लगाने के लिए:", code: '<body bgcolor="Yellow">' },
   { q: "3. बैकग्राउंड इमेज लगाने के लिए:", code: '<body background="photo.jpg">' },
   { q: "4. टेबल का बैकग्राउंड रंग सेट करने के लिए:", code: '<table bgcolor="Yellow"><td>' },
@@ -297,88 +291,74 @@
   { q: "57. File Upload करने के लिए?", code: '<input type="file">' },
   { q: "58. समय चुनने के लिए (Time Picker)?", code: '<input type="time">' },
   { q: "59. Drop-down Select Button के लिए?", code: '<select>\n<option>Mohitsaxena\n</select>' }
-    ];
+  ];
 
-    let soundEnabled = true;
-    let darkMode = true;
+  let soundEnabled = true;
 
-    function toggleSound() {
-      soundEnabled = !soundEnabled;
-      document.getElementById("soundSwitch").classList.toggle("active", soundEnabled);
-      speechSynthesis.cancel();
-    }
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    document.getElementById("soundSwitch").classList.toggle("active", soundEnabled);
+    speechSynthesis.cancel();
+  }
 
-   function toggleTheme() {
+  function toggleTheme() {
     document.body.classList.toggle("dark");
     document.getElementById("themeSwitch").classList.toggle("active");
-    }
+  }
 
-    function speak(btn) {
-      if (!soundEnabled) return;
-      const section = btn.closest("section");
-      const title = section.querySelector("h2").innerText;
-      const code = section.querySelector("code").dataset.text;
-      const speakText = `${title}. कोड है: ${code
-        .replace(/</g, "लेस देन ")
-        .replace(/>/g, "ग्रेटर देन ")
-        .replace(/="/g, ' बराबर ')
-        .replace(/"/g, ' डबल कोट्स ')}`;
+  function speak(btn) {
+    if (!soundEnabled) return;
+    const section = btn.closest("section");
+    const title = section.querySelector("h2").innerText;
+    const code = section.querySelector("code").dataset.text;
 
-      const msg = new SpeechSynthesisUtterance(speakText);
-      msg.lang = "hi-IN";
-      speechSynthesis.cancel();
-      speechSynthesis.speak(msg);
-    }
+    const speakText = `${title}. कोड है: ${code
+      .replace(/</g, "लेस देन ")
+      .replace(/>/g, "ग्रेटर देन ")
+      .replace(/="/g, ' बराबर ')
+      .replace(/"/g, ' डबल कोट्स ')}`;
 
-    function copyCode(btn) {
-      const code = btn.closest(".code-wrapper").querySelector("code").dataset.text;
-      navigator.clipboard.writeText(code).then(() => {
-        btn.innerText = "✅";
-        setTimeout(() => (btn.innerText = "📋"), 1000);
-      });
-    }
+    const msg = new SpeechSynthesisUtterance(speakText);
+    msg.lang = "hi-IN";
+    speechSynthesis.cancel();
+    speechSynthesis.speak(msg);
+  }
 
-    function loadQuestions() {
-      const container = document.getElementById("questionContainer");
-      questions.forEach((item) => {
-        const sec = document.createElement("section");
-        sec.innerHTML = `
-          <h2>${item.q}</h2>
-          <div class="code-wrapper">
-            <button class="copy-btn" onclick="copyCode(this)">📋</button>
-            <code data-text="${item.code.replace(/"/g, '&quot;')}"></code>
-          </div>
-          <button class="speak-btn" onclick="speak(this)">🔊 Read</button>
-        `;
-        container.appendChild(sec);
-      });
-      animateAll();
-    }
-
-    function animateAll() {
-      document.querySelectorAll("code").forEach((el, i) => {
-        const text = el.dataset.text;
-        el.innerText = "";
-        let j = 0;
-        setTimeout(() => {
-          const interval = setInterval(() => {
-            if (j < text.length) {
-              el.innerText += text[j];
-              j++;
-            } else {
-              clearInterval(interval);
-            }
-          }, 40);
-        }, i * 100);
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      darkMode = localStorage.getItem("darkMode") === "on";
-      document.body.classList.add(darkMode ? "dark" : "light");
-      document.getElementById("modeSwitch").classList.toggle("active", darkMode);
-      loadQuestions();
+  function loadQuestions() {
+    const container = document.getElementById("questionContainer");
+    questions.forEach((item, index) => {
+      const sec = document.createElement("section");
+      sec.innerHTML = `
+        <h2>${item.q}</h2>
+        <code data-text="${item.code.replace(/"/g, '&quot;')}"></code>
+        <button class="speak-btn" onclick="speak(this)">🔊 Read</button>
+      `;
+      container.appendChild(sec);
     });
-  </script>
+
+    animateAll();
+  }
+
+  function animateAll() {
+    document.querySelectorAll("code").forEach((el, i) => {
+      const text = el.dataset.text;
+      el.innerHTML = "";
+      let j = 0;
+      setTimeout(() => {
+        const interval = setInterval(() => {
+          if (j < text.length) {
+            el.innerHTML += text[j];
+            j++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 40);
+      }, i * 100);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadQuestions);
+</script>
+
 </body>
 </html>
